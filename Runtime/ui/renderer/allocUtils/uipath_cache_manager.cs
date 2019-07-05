@@ -8,13 +8,14 @@ namespace Unity.UIWidgets.ui {
         //remove unused cache items every 30 frame
         static Dictionary<uint, bool> touched = new Dictionary<uint, bool>(256);
 
-        static float curFrame;
+        static int curFrame;
+        const int clearInterval = 30;
 
         static readonly List<uint> untouched = new List<uint>();
         
         public static void tickNextFrame() {
             curFrame++;
-            if (curFrame < 30) {
+            if (curFrame < clearInterval) {
                 return;
             }
 

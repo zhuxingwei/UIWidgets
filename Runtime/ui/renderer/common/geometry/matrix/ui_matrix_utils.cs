@@ -440,23 +440,6 @@ namespace Unity.UIWidgets.ui {
                 return Mathf.Abs(x) <= tolerance;
             }
 
-            public static bool ScalarNearlyEqual(float x, float y, float tolerance = kScalarNearlyZero) {
-                D.assert(tolerance >= 0);
-                return Mathf.Abs(x - y) <= tolerance;
-            }
-
-            public static bool ScalarIsInteger(float scalar) {
-                return scalar == Mathf.FloorToInt(scalar);
-            }
-
-            public static float DegreesToRadians(float degrees) {
-                return degrees * (Mathf.PI / 180);
-            }
-
-            public static float RadiansToDegrees(float radians) {
-                return radians * (180 / Mathf.PI);
-            }
-
             public static float ScalarSinCos(float radians, out float cosValue) {
                 float sinValue = Mathf.Sin(radians);
 
@@ -478,19 +461,9 @@ namespace Unity.UIWidgets.ui {
                 // At this point, prod will either be NaN or 0
                 return prod == 0; // if prod is NaN, this check will return false
             }
-
-            static byte[] _scalar_as_2s_compliment_vars = new byte[4];
-
-
+            
             static unsafe int GetBytesToInt32(float value) {
-                var intVal = *(int*) &value;
-                fixed (byte* b = _scalar_as_2s_compliment_vars) {
-                    *((int*) b) = intVal;
-                }
-
-                fixed (byte* pbyte = &_scalar_as_2s_compliment_vars[0]) {
-                    return *((int*) pbyte);
-                }
+                return *(int*)(&value);
             }
 
             public static int ScalarAs2sCompliment(float x) {
@@ -505,10 +478,6 @@ namespace Unity.UIWidgets.ui {
 
             public static float sdot(float a, float b, float c, float d) {
                 return a * b + c * d;
-            }
-
-            public static float sdot(float a, float b, float c, float d, float e, float f) {
-                return a * b + c * d + e * f;
             }
 
             public static float scross(float a, float b, float c, float d) {
@@ -527,14 +496,6 @@ namespace Unity.UIWidgets.ui {
             public static float dcross_dscale(double a, double b,
                 double c, double d, double scale) {
                 return (float) (dcross(a, b, c, d) * scale);
-            }
-
-            public static bool is_degenerate_2x2(
-                float scaleX, float skewX,
-                float skewY, float scaleY) {
-                float perp_dot = scaleX * scaleY - skewX * skewY;
-                return ScalarNearlyZero(perp_dot,
-                    kScalarNearlyZero * kScalarNearlyZero);
             }
 
             public static float inv_determinant(uiMatrix3 mat, int isPerspective) {

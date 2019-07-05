@@ -30,7 +30,6 @@ namespace Unity.UIWidgets.ui {
 
         public override void clear() {
             //clear the list immediately to avoid potential memory leak
-            //otherwise, we may clear it in Setup() for lazy update
             this.list.Clear();
         }
 

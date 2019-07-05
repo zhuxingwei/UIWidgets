@@ -1442,14 +1442,7 @@ namespace Unity.UIWidgets.ui {
 
 
         static unsafe int GetBytesToInt32(float value) {
-            var intVal = *(int*) &value;
-            fixed (byte* b = _scalar_as_2s_compliment_vars) {
-                *((int*) b) = intVal;
-            }
-
-            fixed (byte* pbyte = &_scalar_as_2s_compliment_vars[0]) {
-                return *((int*) pbyte);
-            }
+            return *(int*)(&value);
         }
 
         public static int ScalarAs2sCompliment(float x) {
